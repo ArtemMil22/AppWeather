@@ -31,10 +31,10 @@ class WeatherDialog : DialogFragment() {
         val resultString = editText.text.toString()
 
         buttonCity.setOnClickListener {
-            setFragmentResult("key", bundleOf("bundleKey" to resultString))
+            setFragmentResult(
+                "key", bundleOf("bundleKey" to resultString))
             dismiss()
         }
-        // Закрывает диалоговое окно
     }
 
     companion object {

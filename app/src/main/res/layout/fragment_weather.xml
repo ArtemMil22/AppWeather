@@ -83,7 +83,8 @@
                             app:layout_constraintBottom_toBottomOf="@+id/textView"
                             app:layout_constraintEnd_toStartOf="@+id/textView"
                             app:layout_constraintStart_toStartOf="parent"
-                            android:src= "@android:drawable/ic_menu_search"/>
+                            android:src= "@android:drawable/ic_menu_search"
+                            android:contentDescription="TODO" />
 
                         <TextView
                             android:id="@+id/tvData"

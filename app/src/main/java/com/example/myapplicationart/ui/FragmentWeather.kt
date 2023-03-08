@@ -1,5 +1,6 @@
 package com.example.myapplicationart.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -7,8 +8,8 @@ import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplicationart.DialogManager.showAlertDialog
 import com.example.myapplicationart.R
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
@@ -33,6 +34,7 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
         fun newInstance() = FragmentWeather()
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         collapsingToolbarLayout = view.findViewById(R.id.collapsing_toolbar)
@@ -49,17 +51,35 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
         recyclerView.adapter = adapter
         model.myWeatherList.observe(viewLifecycleOwner, ::render)
 
-        val buttonSearch: ImageButton = view.findViewById(R.id.buttonSearch)
+     val buttonSearch = view.findViewById<ImageButton>(R.id.buttonSearch)
+//
+//        buttonSearch.setOnClickListener {
+//            childFragmentManager
+//                .beginTransaction()
+//                .show(WeatherDialog.newInstance())
+//                .replace(R.id.buttonSearch, WeatherDialog.newInstance())
+//                .commit()
+//        }
+//        setFragmentResultListener("key") { key, bundle ->
+//            val result = bundle.getString("bundleKey")
+//            model.getDataWeather(result.toString())
+//        }
+
         buttonSearch.setOnClickListener {
-            childFragmentManager.beginTransaction().show(WeatherDialog.newInstance()).replace(
-                R.id.buttonSearch, WeatherDialog.newInstance()
-            ).commit()
+
+            showAlertDialog(requireContext())
+//                DialogManager.searchByNameDialog(
+//                    requireContext(), object : DialogManager.Listener {
+//                        override fun onClick(name: String?) {
+//                            name?.let { it1 -> get(it1) }
+//                        }
+//                    })
         }
-        setFragmentResultListener("key") { key, bundle ->
-            val result = bundle.getString("bundleKey")
-            model.getDataWeather(result.toString())
-        }
+
     }
+
+
+
 
     private fun render(state: WeatherViewModel.State) {
         when (state) {
@@ -75,7 +95,6 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
                 Picasso.get()
                     .load("https://openweathermap.org/img/wn/" + state.mainData.weatherByHour.first().weatherIcon.first().icon + "@2x.png")
                     .into(tvIcone)
-
                 adapter.setList(state.mainData.weatherByHour)
             }
             WeatherViewModel.State.Error -> "dadad"
