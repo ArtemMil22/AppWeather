@@ -35,7 +35,7 @@ object DialogManager {
     }
 
     @SuppressLint("ResourceAsColor")
-    fun showAlertDialog( context: Context) {
+    fun showAlertDialog( context: Context,listenerEdit:Listener) {
 
         fun showToast(messageRes: String) {
             Toast.makeText(context, messageRes, Toast.LENGTH_SHORT).show()
@@ -44,19 +44,20 @@ object DialogManager {
         val listener = DialogInterface.OnClickListener { _, which ->
 
             when (which) {
-                DialogInterface.BUTTON_POSITIVE -> showToast("R.string.action_ignore")
-                DialogInterface.BUTTON_NEGATIVE -> showToast("R.string.action_ignore")
-                DialogInterface.BUTTON_NEUTRAL ->  showToast("R.string.action_ignore")
+                DialogInterface.BUTTON_POSITIVE -> showToast("Great!")
+                DialogInterface.BUTTON_NEGATIVE -> showToast("Bay!")
+                DialogInterface.BUTTON_NEUTRAL ->  showToast("Don't worry")
             }
         }
 
-
+        val edName = EditText(context)
         val dialog = AlertDialog.Builder(context)
             .setCancelable(false)
             .setIcon(R.mipmap.ic_launcher_round)
-            .setTitle("R.string.default_alert_title")
-            .setMessage("R.string.default_alert_message")
-            .setPositiveButton("OK", listener)
+            .setTitle("Cite name:")
+            .setView(edName)
+            .setMessage("Enter city")
+//            .setPositiveButton("OK", listener)
             .setNegativeButton("CANCEL", listener)
             .setNeutralButton("IGNORE", listener)
             .setOnCancelListener {
@@ -66,13 +67,15 @@ object DialogManager {
                 Log.d(TAG, "Dialog dismissed")
             }
             .create()
+
         dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(context,R.color.white)))
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE,"OK"){_,_ ->
+            listenerEdit.onClick(edName.text.toString())
+            dialog.dismiss()
+        }
         dialog.show()
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context,R.color.black))
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context,R.color.black))
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(context,R.color.black))
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context,R.color.black))
     }
-
-
-
 }

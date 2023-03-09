@@ -1,6 +1,7 @@
 package com.example.myapplicationart.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +33,9 @@ class WeatherDialog : DialogFragment() {
 
         buttonCity.setOnClickListener {
             setFragmentResult(
-                "key", bundleOf("bundleKey" to resultString))
+                "key", bundleOf("bundleKey" to resultString)
+            )
+            Log.d("Loge",resultString)
             dismiss()
         }
     }

@@ -2,14 +2,16 @@ package com.example.myapplicationart.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplicationart.DialogManager.showAlertDialog
+import com.example.myapplicationart.DialogManager
 import com.example.myapplicationart.R
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
@@ -51,34 +53,36 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
         recyclerView.adapter = adapter
         model.myWeatherList.observe(viewLifecycleOwner, ::render)
 
-     val buttonSearch = view.findViewById<ImageButton>(R.id.buttonSearch)
-//
-//        buttonSearch.setOnClickListener {
-//            childFragmentManager
-//                .beginTransaction()
-//                .show(WeatherDialog.newInstance())
-//                .replace(R.id.buttonSearch, WeatherDialog.newInstance())
-//                .commit()
-//        }
-//        setFragmentResultListener("key") { key, bundle ->
-//            val result = bundle.getString("bundleKey")
-//            model.getDataWeather(result.toString())
-//        }
+        val buttonSearch = view.findViewById<ImageButton>(R.id.buttonSearch)
+        val buttonSearch2 = view.findViewById<ImageButton>(R.id.buttonSearch2)
+
+        buttonSearch2.setOnClickListener {
+            val dialogFragment = WeatherDialog()
+            dialogFragment.show(childFragmentManager, "My Fragment")
+
+        }
+        setFragmentResultListener("key") { key, bundle ->
+            val result = bundle.getString("bundleKey")
+            Log.d("Loge",result.toString())
+            model.getDataWeather(result.toString())
+        }
 
         buttonSearch.setOnClickListener {
-
-            showAlertDialog(requireContext())
+            DialogManager.showAlertDialog(
+                requireContext(), object : DialogManager.Listener {
+                    override fun onClick(name: String?) {
+                        name?.let { it -> model.getDataWeather(it) }
+                    }
+                })
 //                DialogManager.searchByNameDialog(
 //                    requireContext(), object : DialogManager.Listener {
 //                        override fun onClick(name: String?) {
-//                            name?.let { it1 -> get(it1) }
+//                            name?.let { it1 -> getWeather(it1) }
 //                        }
 //                    })
         }
 
     }
-
-
 
 
     private fun render(state: WeatherViewModel.State) {
