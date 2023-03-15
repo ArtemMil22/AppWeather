@@ -5,14 +5,19 @@ import com.example.myapplicationart.ui.models.WeatherByHour
 import com.example.myapplicationart.ui.models.WeatherIcon
 import com.example.myapplicationart.ui.models.WeatherModel
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class Repository : FunGetData {
+class Repository() : FunGetData {
+
 
     private val retrofit by lazy {
-        Retrofit.Builder().baseUrl("https://api.openweathermap.org/data/2.5/")
-            .addConverterFactory(GsonConverterFactory.create()).build()
+        Retrofit.Builder()
+            .baseUrl("https://api.openweathermap.org/data/2.5/")
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
     private val api: ApiService by lazy {
         retrofit.create(ApiService::class.java)

@@ -14,39 +14,35 @@ const val TAG = "AlertDialog"
 
 object DialogManager {
 
-    fun searchByNameDialog(context: Context, listener: Listener){
+    fun searchByNameDialog(context: Context, listener: Listener) {
         val builder = AlertDialog.Builder(context)
         val edName = EditText(context)
         builder.setView(edName)
         val dialog = builder.create()
         dialog.setTitle("City name:")
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE,"Ok"){ _, _ ->
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Ok") { _, _ ->
             listener.onClick(edName.text.toString())
             dialog.dismiss()
         }
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE,"Cancel"){ _, _ ->
+        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel") { _, _ ->
             dialog.dismiss()
         }
         dialog.show()
     }
 
-    interface Listener{
-        fun onClick(name:String?)
+    interface Listener {
+        fun onClick(name: String?)
     }
 
     @SuppressLint("ResourceAsColor")
-    fun showAlertDialog( context: Context,listenerEdit:Listener) {
-
-        fun showToast(messageRes: String) {
-            Toast.makeText(context, messageRes, Toast.LENGTH_SHORT).show()
-        }
+    fun showAlertDialog(context: Context, listenerEdit: Listener) {
+        fun showToast(messageRes: String) = Toast.makeText(context, messageRes, Toast.LENGTH_SHORT).show()
 
         val listener = DialogInterface.OnClickListener { _, which ->
-
             when (which) {
                 DialogInterface.BUTTON_POSITIVE -> showToast("Great!")
                 DialogInterface.BUTTON_NEGATIVE -> showToast("Bay!")
-                DialogInterface.BUTTON_NEUTRAL ->  showToast("Don't worry")
+                DialogInterface.BUTTON_NEUTRAL -> showToast("Don't worry")
             }
         }
 
@@ -68,14 +64,18 @@ object DialogManager {
             }
             .create()
 
-        dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(context,R.color.white)))
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE,"OK"){_,_ ->
+        dialog.getWindow()
+            ?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(context, R.color.white)))
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK") { _, _ ->
             listenerEdit.onClick(edName.text.toString())
             dialog.dismiss()
         }
         dialog.show()
-        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context,R.color.black))
-        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(context,R.color.black))
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context,R.color.black))
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            .setTextColor(ContextCompat.getColor(context, R.color.black))
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
+            .setTextColor(ContextCompat.getColor(context, R.color.black))
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(ContextCompat.getColor(context, R.color.black))
     }
 }
