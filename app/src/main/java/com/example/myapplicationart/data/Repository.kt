@@ -12,7 +12,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class Repository(private val apiService: ApiService?) : FunGetData {
+class Repository(private val apiServiceRX: ApiService?) : FunGetData {
 
 
     private val retrofit by lazy {
@@ -51,7 +51,7 @@ class Repository(private val apiService: ApiService?) : FunGetData {
         }
 
     override fun getWeatherRX(nameCity: String): Observable<WeatherModel> {
-        return apiService?.getDataRX(nameCity)
+        return apiServiceRX?.getDataRX(nameCity)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.map { mainData ->
@@ -60,9 +60,9 @@ class Repository(private val apiService: ApiService?) : FunGetData {
                     weatherByHour = mainData.list.map {
                         WeatherByHour(
                             mainTemp = MainTemperature(
-                                temp = it.main.temp.let{it - 273.15f},
-                                temp_min = it.main.temp_min.let {it - 273.15f},
-                                temp_max = it.main.temp_max.let{it - 273.15f},
+                                temp = it.main.temp,
+                                temp_min = it.main.temp_min,
+                                temp_max = it.main.temp_max,
                                 pressure = it.main.pressure,
                                 humidity = it.main.humidity
                             ),
@@ -76,6 +76,6 @@ class Repository(private val apiService: ApiService?) : FunGetData {
                             dateTxt = mainData.list.first().dt_txt
                         )
                     })
-            } ?: getWeatherRX("Tambov")
+            } ?: getWeatherRX("Thailand")
     }
 }

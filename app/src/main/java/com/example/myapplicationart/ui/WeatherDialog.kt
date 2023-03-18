@@ -50,7 +50,7 @@ class WeatherDialog @Inject constructor() : DialogFragment() {
             setFragmentResult(
                 "key", bundleOf("bundleKey" to resultString)
             )
-            Log.d("Loge",resultString)
+            Log.d("Loge1",resultString)
             model.getDataWeatherRX(resultString)
             dismiss()
         }

@@ -19,7 +19,7 @@ class WeatherViewModel @Inject constructor(val apiService: ApiService)
     sealed class State {
         object LoadContent : State()
         data class ContentLoaded(
-            val mainData: WeatherModel // MainData
+            val mainData: WeatherModel
         ) : State()
         object Error : State()
     }
@@ -35,10 +35,12 @@ class WeatherViewModel @Inject constructor(val apiService: ApiService)
         myWeatherList.value = State.LoadContent
         viewModelScope.launch {
             try {
-                myWeatherList.value = State.ContentLoaded(repo.getWeather(nameCity))
+                myWeatherList.value = State.ContentLoaded(repo.getWeather(nameCity).also{
+                    var dataTxt = it.weatherByHour.first().dateTxt.substring(0, 10)
+                })
             } catch (e: Throwable) {
                 myWeatherList.value = State.Error
-                Log.e("MyLogogo", "Ой беда, караул", e)
+                Log.e("Loge", "Ой беда, караул", e)
             }
         }
     }
@@ -46,11 +48,14 @@ class WeatherViewModel @Inject constructor(val apiService: ApiService)
     fun getDataWeatherRX(nameCity: String){
         myWeatherListRX.tryEmit(State.LoadContent)
             repoRX.getWeatherRX(nameCity)
-                .doOnNext{ Log.d("Loge",it.toString())
-                    myWeatherListRX.tryEmit(State.ContentLoaded(it))
+                .doOnNext{
+                    Log.d("Loge1","Функция getRX работает ")
+                    myWeatherListRX.tryEmit(State.ContentLoaded(it.also{
+                        var dataTxt = it.weatherByHour.first().dateTxt.substring(0, 10)
+                    }))
                 }
                 .doOnError {
-                    Log.e("Loge","Error RX",it)
+                    Log.e("Loge1","Error RX",it)
                     myWeatherListRX.tryEmit(State.Error)
                 }
                 .subscribe()
