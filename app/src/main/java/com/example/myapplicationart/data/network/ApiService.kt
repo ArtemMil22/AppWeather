@@ -1,4 +1,4 @@
-package com.example.myapplicationart.data
+package com.example.myapplicationart.data.network
 
 import com.example.myapplicationart.data.model.MainData
 import io.reactivex.Observable

@@ -1,8 +1,8 @@
-package com.example.myapplicationart.dagger2
+package com.example.myapplicationart.data.dagger2
 
-import com.example.myapplicationart.data.ApiService
-import com.example.myapplicationart.data.Repository
 import com.example.myapplicationart.data.model.BASE_URL
+import com.example.myapplicationart.data.network.ApiService
+import com.example.myapplicationart.data.network.Repository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

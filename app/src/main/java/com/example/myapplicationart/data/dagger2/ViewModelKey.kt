@@ -1,4 +1,4 @@
-package com.example.myapplicationart.dagger2
+package com.example.myapplicationart.data.dagger2
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

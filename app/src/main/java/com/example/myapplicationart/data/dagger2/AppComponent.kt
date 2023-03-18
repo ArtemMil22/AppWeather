@@ -1,4 +1,4 @@
-package com.example.myapplicationart.dagger2
+package com.example.myapplicationart.data.dagger2
 
 import com.example.myapplicationart.ui.FragmentWeather
 import com.example.myapplicationart.ui.WeatherDialog

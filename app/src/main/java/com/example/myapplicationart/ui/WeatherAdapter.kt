@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplicationart.R
 import com.example.myapplicationart.data.model.ICON_URL_PART_ONE
 import com.example.myapplicationart.data.model.ICON_URL_PART_TWO
-import com.example.myapplicationart.ui.models.WeatherByHour
+import com.example.myapplicationart.ui.modelForUI.WeatherByHour
 import com.squareup.picasso.Picasso
 
 

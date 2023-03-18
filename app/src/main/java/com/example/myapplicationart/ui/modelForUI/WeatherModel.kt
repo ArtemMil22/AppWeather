@@ -1,4 +1,4 @@
-package com.example.myapplicationart.ui.models
+package com.example.myapplicationart.ui.modelForUI
 
 data class WeatherModel(
     val citiName: String,

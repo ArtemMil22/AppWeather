@@ -13,13 +13,13 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplicationart.R
-import com.example.myapplicationart.dagger2.AppComponent
-import com.example.myapplicationart.dagger2.DaggerAppComponent
-import com.example.myapplicationart.dagger2.ViewModelFactory
-import com.example.myapplicationart.data.ApiService
+import com.example.myapplicationart.data.dagger2.AppComponent
+import com.example.myapplicationart.data.dagger2.DaggerAppComponent
+import com.example.myapplicationart.data.dagger2.ViewModelFactory
 import com.example.myapplicationart.data.model.ICON_URL_PART_ONE
 import com.example.myapplicationart.data.model.ICON_URL_PART_TWO
 import com.example.myapplicationart.data.model.TAG
+import com.example.myapplicationart.data.network.ApiService
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.google.android.material.appbar.CollapsingToolbarLayout

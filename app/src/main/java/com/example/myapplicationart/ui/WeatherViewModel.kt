@@ -4,11 +4,11 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplicationart.data.ApiService
-import com.example.myapplicationart.data.FunGetData
-import com.example.myapplicationart.data.Repository
 import com.example.myapplicationart.data.model.TAG
-import com.example.myapplicationart.ui.models.WeatherModel
+import com.example.myapplicationart.data.network.ApiService
+import com.example.myapplicationart.data.network.FunGetData
+import com.example.myapplicationart.data.network.Repository
+import com.example.myapplicationart.ui.modelForUI.WeatherModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch

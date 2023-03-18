@@ -1,7 +1,7 @@
-package com.example.myapplicationart.data
+package com.example.myapplicationart.data.network
 
 
-import com.example.myapplicationart.ui.models.WeatherModel
+import com.example.myapplicationart.ui.modelForUI.WeatherModel
 import io.reactivex.Observable
 
 interface FunGetData {

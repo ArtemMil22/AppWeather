@@ -1,10 +1,10 @@
-package com.example.myapplicationart.data
+package com.example.myapplicationart.data.network
 
 import com.example.myapplicationart.data.model.BASE_URL
-import com.example.myapplicationart.ui.models.MainTemperature
-import com.example.myapplicationart.ui.models.WeatherByHour
-import com.example.myapplicationart.ui.models.WeatherIcon
-import com.example.myapplicationart.ui.models.WeatherModel
+import com.example.myapplicationart.ui.modelForUI.MainTemperature
+import com.example.myapplicationart.ui.modelForUI.WeatherByHour
+import com.example.myapplicationart.ui.modelForUI.WeatherIcon
+import com.example.myapplicationart.ui.modelForUI.WeatherModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
