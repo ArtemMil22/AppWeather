@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplicationart.DialogManager
 import com.example.myapplicationart.R
 import com.example.myapplicationart.dagger2.AppComponent
 import com.example.myapplicationart.dagger2.DaggerAppComponent

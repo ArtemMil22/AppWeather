@@ -1,4 +1,4 @@
-package com.example.myapplicationart.dagger2.rxretrofit
+package com.example.myapplicationart.dagger2
 
 import com.example.myapplicationart.data.ApiService
 import com.example.myapplicationart.data.Repository

@@ -1,8 +1,8 @@
-package com.example.myapplicationart.ui
+package com.example.myapplicationart.dagger2
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.myapplicationart.dagger2.ViewModelFactory
+import com.example.myapplicationart.ui.WeatherViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

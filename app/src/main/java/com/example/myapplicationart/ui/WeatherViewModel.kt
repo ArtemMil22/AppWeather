@@ -36,9 +36,7 @@ class WeatherViewModel @Inject constructor(apiService: ApiService)
         myWeatherList.value = State.LoadContent
         viewModelScope.launch {
             try {
-                myWeatherList.value = State.ContentLoaded(repo.getWeather(nameCity).also{
-                    var dataTxt = it.weatherByHour.first().dateTxt.substring(0, 10)
-                })
+                myWeatherList.value = State.ContentLoaded(repo.getWeather(nameCity))
             } catch (e: Throwable) {
                 myWeatherList.value = State.Error
                 Log.e(TAG, "Request city by using coroutines Error", e)
@@ -51,9 +49,7 @@ class WeatherViewModel @Inject constructor(apiService: ApiService)
             repoRX.getWeatherRX(nameCity)
                 .doOnNext{
                     Log.d(TAG,"Request city by using RXJava works properly")
-                    myWeatherListRX.tryEmit(State.ContentLoaded(it.also{
-                        var dataTxt = it.weatherByHour.first().dateTxt.substring(0, 10)
-                    }))
+                    myWeatherListRX.tryEmit(State.ContentLoaded(it))
                 }
                 .doOnError {
                     Log.e(TAG,"Request city by using RXJava Error",it)

@@ -1,6 +1,5 @@
-package com.example.myapplicationart
+package com.example.myapplicationart.ui
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -9,34 +8,18 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-
-const val TAG = "AlertDialog"
+import com.example.myapplicationart.R
+import com.example.myapplicationart.data.model.TAG
 
 object DialogManager {
-
-    fun searchByNameDialog(context: Context, listener: Listener) {
-        val builder = AlertDialog.Builder(context)
-        val edName = EditText(context)
-        builder.setView(edName)
-        val dialog = builder.create()
-        dialog.setTitle("City name:")
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Ok") { _, _ ->
-            listener.onClick(edName.text.toString())
-            dialog.dismiss()
-        }
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel") { _, _ ->
-            dialog.dismiss()
-        }
-        dialog.show()
-    }
 
     interface Listener {
         fun onClick(name: String?)
     }
 
-    @SuppressLint("ResourceAsColor")
     fun showAlertDialog(context: Context, listenerEdit: Listener) {
-        fun showToast(messageRes: String) = Toast.makeText(context, messageRes, Toast.LENGTH_SHORT).show()
+        fun showToast(messageRes: String) =
+            Toast.makeText(context, messageRes, Toast.LENGTH_SHORT).show()
 
         val listener = DialogInterface.OnClickListener { _, which ->
             when (which) {
@@ -53,18 +36,17 @@ object DialogManager {
             .setTitle("Cite name:")
             .setView(edName)
             .setMessage("Enter city")
-//            .setPositiveButton("OK", listener)
             .setNegativeButton("CANCEL", listener)
             .setNeutralButton("IGNORE", listener)
             .setOnCancelListener {
-                showToast("R.string.action_ignore")
+                showToast("You got out")
             }
             .setOnDismissListener {
                 Log.d(TAG, "Dialog dismissed")
             }
             .create()
 
-        dialog.getWindow()
+        dialog.window
             ?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(context, R.color.white)))
         dialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK") { _, _ ->
             listenerEdit.onClick(edName.text.toString())
