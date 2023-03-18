@@ -19,7 +19,7 @@ import com.example.myapplicationart.R
 import com.example.myapplicationart.dagger2.AppComponent
 import com.example.myapplicationart.dagger2.DaggerAppComponent
 import com.example.myapplicationart.dagger2.ViewModelFactory
-import com.example.myapplicationart.retrofit2RXjava.ApiServiceRX
+import com.example.myapplicationart.data.ApiService
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -42,7 +42,7 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
     lateinit var viewModelFactory: ViewModelFactory
 
     @Inject
-    lateinit var api: ApiServiceRX
+    lateinit var api: ApiService
     //lateinit var component: NetworkComponent
     
     private val model: WeatherViewModel by lazy {
@@ -78,7 +78,7 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
 //        setHasOptionsMenu(true)
         recyclerView = view.findViewById(R.id.tvRv)
         model.getDataWeather("Tambov")
-        model.getDataWeatherRX()
+            //model.getDataWeatherRX()
         adapter = WeatherAdapter()
         recyclerView.adapter = adapter
         model.myWeatherList.observe(viewLifecycleOwner, ::render)
@@ -96,9 +96,7 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
             DialogManager.showAlertDialog(
                 requireContext(), object : DialogManager.Listener {
                     override fun onClick(name: String?) {
-                        name?.let {
-                                it -> model.getDataWeather(it)
-                        }
+                        name?.let { it -> model.getDataWeather(it)}
                     }
                 })
         }

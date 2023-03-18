@@ -10,11 +10,28 @@ import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.ViewModelProvider
 import com.example.myapplicationart.R
+import com.example.myapplicationart.dagger2.AppComponent
+import com.example.myapplicationart.dagger2.ViewModelFactory
+import com.example.myapplicationart.data.ApiService
 import javax.inject.Inject
 
 
 class WeatherDialog @Inject constructor() : DialogFragment() {
+
+    lateinit var appComponent: AppComponent
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    @Inject
+    lateinit var api: ApiService
+
+    private val model: WeatherViewModel by lazy {
+        ViewModelProvider(this,viewModelFactory)[WeatherViewModel::class.java]
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,16 +44,17 @@ class WeatherDialog @Inject constructor() : DialogFragment() {
         val editText: EditText = view.findViewById(R.id.tvTitle)
         var resultString:String
 
+
         buttonCity.setOnClickListener {
             resultString = editText.text.toString()
             setFragmentResult(
                 "key", bundleOf("bundleKey" to resultString)
             )
             Log.d("Loge",resultString)
+            model.getDataWeatherRX(resultString)
             dismiss()
         }
     }
-
     companion object {
         fun newInstance() = WeatherDialog()
     }

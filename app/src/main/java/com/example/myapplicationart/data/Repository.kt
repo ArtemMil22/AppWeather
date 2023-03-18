@@ -4,12 +4,15 @@ import com.example.myapplicationart.ui.models.MainTemperature
 import com.example.myapplicationart.ui.models.WeatherByHour
 import com.example.myapplicationart.ui.models.WeatherIcon
 import com.example.myapplicationart.ui.models.WeatherModel
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class Repository() : FunGetData {
+class Repository(private val apiService: ApiService?) : FunGetData {
 
 
     private val retrofit by lazy {
@@ -22,23 +25,23 @@ class Repository() : FunGetData {
     private val api: ApiService by lazy {
         retrofit.create(ApiService::class.java)
     }
-    override suspend fun getWether(nameCity: String): WeatherModel =
+    override suspend fun getWeather(nameCity: String): WeatherModel =
         api.getWeatherData(nameCity).let { mainData ->
             WeatherModel(
                 citiName = mainData.city.name,
                 weatherByHour = mainData.list.map {
                 WeatherByHour(
                     mainTemp = MainTemperature(
-                        temp = it.main.temp.let{it - 273.15f},
-                        temp_min = it.main.temp_min.let {it - 273.15f},
-                        temp_max = it.main.temp_max.let{it - 273.15f},
+                        temp = it.main.temp,
+                        temp_min = it.main.temp_min,
+                        temp_max = it.main.temp_max,
                         pressure = it.main.pressure,
                         humidity = it.main.humidity
                     ),
                     weatherIcon = mainData.list.map {
                         WeatherIcon(
                             icon = it.weather.first().icon,
-                            description = it.weather.first().description.capitalize()
+                            description = it.weather.first().description.replaceFirstChar{it}
                         )
                     },
                     windSpeed = mainData.list.first().wind.speed,
@@ -46,4 +49,33 @@ class Repository() : FunGetData {
                 )
             })
         }
+
+    override fun getWeatherRX(nameCity: String): Observable<WeatherModel> {
+        return apiService?.getDataRX(nameCity)
+            ?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.map { mainData ->
+                WeatherModel(
+                    citiName = mainData.city.name,
+                    weatherByHour = mainData.list.map {
+                        WeatherByHour(
+                            mainTemp = MainTemperature(
+                                temp = it.main.temp.let{it - 273.15f},
+                                temp_min = it.main.temp_min.let {it - 273.15f},
+                                temp_max = it.main.temp_max.let{it - 273.15f},
+                                pressure = it.main.pressure,
+                                humidity = it.main.humidity
+                            ),
+                            weatherIcon = mainData.list.map {
+                                WeatherIcon(
+                                    icon = it.weather.first().icon,
+                                    description = it.weather.first().description.replaceFirstChar{it}
+                                )
+                            },
+                            windSpeed = mainData.list.first().wind.speed,
+                            dateTxt = mainData.list.first().dt_txt
+                        )
+                    })
+            } ?: getWeatherRX("Tambov")
+    }
 }

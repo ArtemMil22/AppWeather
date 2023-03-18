@@ -1,8 +1,7 @@
 package com.example.myapplicationart.dagger2.rxretrofit
 
-import com.example.myapplicationart.retrofit2RXjava.ApiRepository
-import com.example.myapplicationart.retrofit2RXjava.ApiServiceRX
-import com.example.myapplicationart.retrofit2RXjava.RepositotyRX
+import com.example.myapplicationart.data.ApiService
+import com.example.myapplicationart.data.Repository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -15,8 +14,8 @@ class NetworkModule {
     private val BASE_URL = "https://api.openweathermap.org/data/2.5/"
 
     @Provides
-    fun provideApiServiceRX(retrofit: Retrofit): ApiServiceRX {
-        return retrofit.create(ApiServiceRX::class.java)
+    fun provideApiServiceRX(retrofit: Retrofit): ApiService {
+        return retrofit.create(ApiService::class.java)
     }
 
     @Provides
@@ -28,7 +27,7 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideRepo(serviceRX: ApiServiceRX): RepositotyRX = ApiRepository(serviceRX)
+    fun provideRepo(serviceRX: ApiService): Repository = Repository(serviceRX)
 }
 //    @Provides
 //    fun provideAPI():ApiServiceRX{

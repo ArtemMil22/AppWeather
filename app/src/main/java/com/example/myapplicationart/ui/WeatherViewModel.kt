@@ -4,18 +4,16 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myapplicationart.data.ApiService
 import com.example.myapplicationart.data.FunGetData
 import com.example.myapplicationart.data.Repository
-import com.example.myapplicationart.retrofit2RXjava.ApiRepository
-import com.example.myapplicationart.retrofit2RXjava.ApiServiceRX
-import com.example.myapplicationart.retrofit2RXjava.RepositotyRX
 import com.example.myapplicationart.ui.models.WeatherModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class WeatherViewModel @Inject constructor(val apiServiceRX: ApiServiceRX)
+class WeatherViewModel @Inject constructor(val apiService: ApiService)
     : ViewModel() {
 
     sealed class State {
@@ -26,8 +24,8 @@ class WeatherViewModel @Inject constructor(val apiServiceRX: ApiServiceRX)
         object Error : State()
     }
 
-    var repoRX: RepositotyRX = ApiRepository(apiServiceRX)
-    var repo: FunGetData = Repository()
+    var repoRX: FunGetData = Repository(apiService)
+    var repo: FunGetData = Repository(null)
     val myWeatherList: MutableLiveData<State> = MutableLiveData()
     val myWeatherListRX = MutableSharedFlow<State>(
         1,0,BufferOverflow.DROP_OLDEST
@@ -37,7 +35,7 @@ class WeatherViewModel @Inject constructor(val apiServiceRX: ApiServiceRX)
         myWeatherList.value = State.LoadContent
         viewModelScope.launch {
             try {
-                myWeatherList.value = State.ContentLoaded(repo.getWether(nameCity))
+                myWeatherList.value = State.ContentLoaded(repo.getWeather(nameCity))
             } catch (e: Throwable) {
                 myWeatherList.value = State.Error
                 Log.e("MyLogogo", "Ой беда, караул", e)
@@ -45,9 +43,9 @@ class WeatherViewModel @Inject constructor(val apiServiceRX: ApiServiceRX)
         }
     }
 
-    fun getDataWeatherRX(){
+    fun getDataWeatherRX(nameCity: String){
         myWeatherListRX.tryEmit(State.LoadContent)
-            repoRX.getWeatherRX()
+            repoRX.getWeatherRX(nameCity)
                 .doOnNext{ Log.d("Loge",it.toString())
                     myWeatherListRX.tryEmit(State.ContentLoaded(it))
                 }
