@@ -7,13 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplicationart.data.ApiService
 import com.example.myapplicationart.data.FunGetData
 import com.example.myapplicationart.data.Repository
+import com.example.myapplicationart.data.model.TAG
 import com.example.myapplicationart.ui.models.WeatherModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class WeatherViewModel @Inject constructor(val apiService: ApiService)
+class WeatherViewModel @Inject constructor(apiService: ApiService)
     : ViewModel() {
 
     sealed class State {
@@ -40,7 +41,7 @@ class WeatherViewModel @Inject constructor(val apiService: ApiService)
                 })
             } catch (e: Throwable) {
                 myWeatherList.value = State.Error
-                Log.e("Loge", "Ой беда, караул", e)
+                Log.e(TAG, "Request city by using coroutines Error", e)
             }
         }
     }
@@ -49,13 +50,13 @@ class WeatherViewModel @Inject constructor(val apiService: ApiService)
         myWeatherListRX.tryEmit(State.LoadContent)
             repoRX.getWeatherRX(nameCity)
                 .doOnNext{
-                    Log.d("Loge1","Функция getRX работает ")
+                    Log.d(TAG,"Request city by using RXJava works properly")
                     myWeatherListRX.tryEmit(State.ContentLoaded(it.also{
                         var dataTxt = it.weatherByHour.first().dateTxt.substring(0, 10)
                     }))
                 }
                 .doOnError {
-                    Log.e("Loge1","Error RX",it)
+                    Log.e(TAG,"Request city by using RXJava Error",it)
                     myWeatherListRX.tryEmit(State.Error)
                 }
                 .subscribe()

@@ -15,6 +15,7 @@ import com.example.myapplicationart.R
 import com.example.myapplicationart.dagger2.AppComponent
 import com.example.myapplicationart.dagger2.ViewModelFactory
 import com.example.myapplicationart.data.ApiService
+import com.example.myapplicationart.data.model.TAG
 import javax.inject.Inject
 
 
@@ -29,7 +30,7 @@ class WeatherDialog @Inject constructor() : DialogFragment() {
     lateinit var api: ApiService
 
     private val model: WeatherViewModel by lazy {
-        ViewModelProvider(this,viewModelFactory)[WeatherViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[WeatherViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -42,7 +43,7 @@ class WeatherDialog @Inject constructor() : DialogFragment() {
 
         val buttonCity: Button = view.findViewById(R.id.btnPositive)
         val editText: EditText = view.findViewById(R.id.tvTitle)
-        var resultString:String
+        var resultString: String
 
 
         buttonCity.setOnClickListener {
@@ -50,11 +51,12 @@ class WeatherDialog @Inject constructor() : DialogFragment() {
             setFragmentResult(
                 "key", bundleOf("bundleKey" to resultString)
             )
-            Log.d("Loge1",resultString)
+            Log.d(TAG, resultString)
             model.getDataWeatherRX(resultString)
             dismiss()
         }
     }
+
     companion object {
         fun newInstance() = WeatherDialog()
     }

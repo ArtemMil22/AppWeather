@@ -1,5 +1,6 @@
 package com.example.myapplicationart.data
 
+import com.example.myapplicationart.data.model.BASE_URL
 import com.example.myapplicationart.ui.models.MainTemperature
 import com.example.myapplicationart.ui.models.WeatherByHour
 import com.example.myapplicationart.ui.models.WeatherIcon
@@ -11,13 +12,12 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 class Repository(private val apiServiceRX: ApiService?) : FunGetData {
 
 
     private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/data/2.5/")
+            .baseUrl(BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

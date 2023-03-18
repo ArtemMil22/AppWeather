@@ -25,8 +25,3 @@ data class WeatherIcon(
     val icon:String
 )
 
-//val weather: List<Weather>,
-//val clouds: Clouds,
-//val wind: Wind,
-//val visibility:Int,
-//val dt_txt:String

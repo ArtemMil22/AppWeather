@@ -10,9 +10,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [NetworkModule::class,ViewModelModule::class])
 interface AppComponent {
-//    fun getCar():Car
-//    fun getEngine():Engine
-//    fun getFuel():Fuel
+
     fun getWeatherDialog():WeatherDialog
     fun inject(fragWeather: FragmentWeather)
 }
