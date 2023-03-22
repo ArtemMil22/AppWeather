@@ -14,8 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.myapplicationart.R
 import com.example.myapplicationart.data.dagger2.AppComponent
 import com.example.myapplicationart.data.dagger2.ViewModelFactory
-import com.example.myapplicationart.data.model.TAG
 import com.example.myapplicationart.data.network.ApiService
+import com.example.myapplicationart.domain.TAG
 import javax.inject.Inject
 
 

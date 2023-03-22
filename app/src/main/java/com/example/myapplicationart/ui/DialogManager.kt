@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.myapplicationart.R
-import com.example.myapplicationart.data.model.TAG
+import com.example.myapplicationart.domain.TAG
 
 object DialogManager {
 
