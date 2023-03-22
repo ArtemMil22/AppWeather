@@ -1,6 +1,5 @@
 package com.example.myapplicationart.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,13 +12,11 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplicationart.R
+import com.example.myapplicationart.WeatherApp
 import com.example.myapplicationart.data.dagger2.AppComponent
-import com.example.myapplicationart.data.dagger2.DaggerAppComponent
 import com.example.myapplicationart.data.dagger2.ViewModelFactory
-import com.example.myapplicationart.data.model.ICON_URL_PART_ONE
-import com.example.myapplicationart.data.model.ICON_URL_PART_TWO
-import com.example.myapplicationart.data.model.TAG
 import com.example.myapplicationart.data.network.ApiService
+import com.example.myapplicationart.domain.TAG
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -47,11 +44,9 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
     private val model: WeatherViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[WeatherViewModel::class.java]
     }
-
-    override fun onAttach(context: Context) {
-        appComponent = DaggerAppComponent.create()
-        appComponent.inject(this)
-        super.onAttach(context)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        WeatherApp.component.inject(this)
+        super.onCreate(savedInstanceState)
     }
 
     companion object {
@@ -106,18 +101,15 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
         val tvIcon = view?.findViewById<ImageView>(R.id.tvIcone)
         when (state) {
             is WeatherViewModel.State.ContentLoaded -> {
-                tvData?.text = state.mainData.weatherByHour.first().dateTxt.substring(0, 10)
-                tvSunny?.text = state.mainData.weatherByHour.first().weatherIcon.first().description
-                tvTemper?.text =
-                    state.mainData.weatherByHour.first().mainTemp.temp.toInt().toString()
-                        .let { "$it°C" }
-                tvMinMax?.text =
-                    state.mainData.weatherByHour.first().mainTemp.let { "Min ${it.temp_min.toInt()}°/Max ${it.temp_max.toInt()}°" }
-                textView?.text = state.mainData.citiName
+                tvData?.text = state.dataText
+                tvSunny?.text = state.weatherIconDescriptionToday
+                tvTemper?.text = state.tempToday
+                tvMinMax?.text = state.maxAndMinTempToday
+                textView?.text = state.cityName
                 Picasso.get()
-                    .load(ICON_URL_PART_ONE + state.mainData.weatherByHour.first().weatherIcon.first().icon + ICON_URL_PART_TWO)
+                    .load(state.iconUrl)
                     .into(tvIcon)
-                adapter.setList(state.mainData.weatherByHour)
+                adapter.setList(state.weatherByHour)
             }
             WeatherViewModel.State.Error -> Log.d(TAG, "Fun render - does not work correctly")
             WeatherViewModel.State.LoadContent -> Log.d(TAG, "Fun render - content upload")
