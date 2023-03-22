@@ -6,4 +6,6 @@
     <string name="clear_search">clear_search</string>
     <string name="btnPositive">OK</string>
     <string name="btnNegative">Cancel</string>
+    
+    <string name="extremum">Min %1$d /Max %2$d </string>
 </resources>

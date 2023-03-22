@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_url">https://openweathermap.org/img/wn/%1$s@2x.png</string>>
+    <string name="celciy">%d°C</string>
+</resources>
