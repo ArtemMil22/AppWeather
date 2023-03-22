@@ -11,11 +11,10 @@ import dagger.multibindings.IntoMap
 abstract class ViewModelModule {
 
     @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory)
-    :ViewModelProvider.Factory
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
     @Binds
     @IntoMap
     @ViewModelKey(WeatherViewModel::class)
-    abstract fun splashViewModel(viewModel: WeatherViewModel):ViewModel
+    abstract fun splashViewModel(viewModel: WeatherViewModel): ViewModel
 }
