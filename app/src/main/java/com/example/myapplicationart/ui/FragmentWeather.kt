@@ -13,9 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplicationart.R
 import com.example.myapplicationart.WeatherApp
-import com.example.myapplicationart.data.dagger2.AppComponent
-import com.example.myapplicationart.data.dagger2.ViewModelFactory
 import com.example.myapplicationart.data.network.ApiService
+import com.example.myapplicationart.di.AppComponent
+import com.example.myapplicationart.di.ViewModelFactory
 import com.example.myapplicationart.domain.TAG
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
@@ -69,7 +69,8 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
         model.myWeatherList.observe(viewLifecycleOwner, ::render)
 
         buttonSearch2.setOnClickListener {
-            dialogFragment = appComponent.getWeatherDialog()
+            dialogFragment = WeatherDialog()
+            //dialogFragment = appComponent.getWeatherDialog()
             dialogFragment.show(parentFragmentManager, "My Fragment")
         }
 
