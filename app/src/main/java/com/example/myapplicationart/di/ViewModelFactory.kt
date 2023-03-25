@@ -1,4 +1,4 @@
-package com.example.myapplicationart.data.dagger2
+package com.example.myapplicationart.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplicationart.R
 import com.example.myapplicationart.ResourcesProvider
-import com.example.myapplicationart.data.network.Repository
+import com.example.myapplicationart.data.network.RepositoryImp
 import com.example.myapplicationart.domain.TAG
 import com.example.myapplicationart.ui.modelForUI.WeatherByHour
 import kotlinx.coroutines.channels.BufferOverflow
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class WeatherViewModel @Inject constructor(
-    private val repository: Repository,
+    private val repositoryImp: RepositoryImp,
     private val resourcesProvider: ResourcesProvider
 ) : ViewModel() {
 
@@ -43,7 +43,7 @@ class WeatherViewModel @Inject constructor(
         myWeatherList.value = State.LoadContent
         viewModelScope.launch {
             try {
-                repository.getWeather(nameCity)
+                repositoryImp.getWeather(nameCity)
                     .let { weatherData ->
                         myWeatherList.value = State.ContentLoaded(
                             dataText = weatherData.dataText.substring(0, 10),
@@ -73,7 +73,7 @@ class WeatherViewModel @Inject constructor(
 
     fun getDataWeatherRX(nameCity: String) {
         myWeatherListRX.tryEmit(State.LoadContent)
-        repository.getWeatherRX(nameCity)
+        repositoryImp.getWeatherRX(nameCity)
             .map { weatherData ->
                 Log.d(TAG, "Request city by using RXJava works properly")
                 myWeatherListRX.tryEmit(

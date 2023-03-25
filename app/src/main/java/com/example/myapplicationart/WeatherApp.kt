@@ -1,8 +1,8 @@
 package com.example.myapplicationart
 
 import android.app.Application
-import com.example.myapplicationart.data.dagger2.AppComponent
-import com.example.myapplicationart.data.dagger2.DaggerAppComponent
+import com.example.myapplicationart.di.AppComponent
+import com.example.myapplicationart.di.DaggerAppComponent
 
 class WeatherApp : Application() {
 
@@ -18,7 +18,6 @@ class WeatherApp : Application() {
     override fun onCreate() {
         app = this
         component = DaggerAppComponent.factory().create(this)
-
         super.onCreate()
     }
 }
