@@ -12,9 +12,10 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import com.example.myapplicationart.R
 import com.example.myapplicationart.domain.TAG
+import javax.inject.Inject
 
 
-class WeatherDialog: DialogFragment() {
+class WeatherDialog @Inject constructor(): DialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +28,6 @@ class WeatherDialog: DialogFragment() {
         val buttonCity: Button = view.findViewById(R.id.btnPositive)
         val editText: EditText = view.findViewById(R.id.tvTitle)
         var resultString: String
-
 
         buttonCity.setOnClickListener {
             resultString = editText.text.toString()
