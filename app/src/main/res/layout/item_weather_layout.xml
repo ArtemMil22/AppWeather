@@ -26,11 +26,11 @@
             android:textColorHighlight="@null"
             android:textColorHint="@null"
             android:textColorLink="@null"
-            android:textSize="20sp"
+            android:textSize="15sp"
             app:layout_constraintBottom_toTopOf="@+id/tvDataItem"
             app:layout_constraintStart_toEndOf="@+id/tvIm"
             app:layout_constraintTop_toBottomOf="@+id/tvVeterItem"
-            tools:text="Sunny"/>
+            tools:text="Небольшой дождь и осадки"/>
 
         <TextView
             android:id="@+id/tvVeterItem"

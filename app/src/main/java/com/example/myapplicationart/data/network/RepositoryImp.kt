@@ -1,7 +1,7 @@
 package com.example.myapplicationart.data.network
 
+import com.example.myapplicationart.common.mapToCurrentWeatherData
 import com.example.myapplicationart.domain.Repository
-import com.example.myapplicationart.domain.mapToCurrentWeatherData
 import com.example.myapplicationart.ui.modelForUI.CurrentWeatherData
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers

@@ -1,5 +1,4 @@
-package com.example.myapplicationart.domain
-
+package com.example.myapplicationart.common
 import com.example.myapplicationart.data.model.MainData
 import com.example.myapplicationart.ui.modelForUI.*
 
@@ -8,7 +7,7 @@ fun MainData.mapToCurrentWeatherData(): CurrentWeatherData {
     return CurrentWeatherData(
         dataText = mainData.dt_txt,
         weatherIconDescriptionToday = mainData.weather.first().description.replaceFirstChar { it },
-        tempToday = mainData.main.temp.toString(),
+        tempToday = mainData.main.temp.toInt().toString().let { it + "°C" },
         maxAndMinTempToday = MaxMinTemp(
             maxTempToday = mainData.main.temp_max.toInt(),
             minTempToday = mainData.main.temp_min.toInt()

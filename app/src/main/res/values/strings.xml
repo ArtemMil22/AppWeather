@@ -8,4 +8,5 @@
     <string name="btnNegative">Cancel</string>
     
     <string name="extremum">Min %1$d /Max %2$d </string>
+    <string name="C">%1$d °C </string>
 </resources>

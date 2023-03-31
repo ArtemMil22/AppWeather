@@ -49,6 +49,9 @@ class WeatherViewModel @Inject constructor(
                             dataText = weatherData.dataText.substring(0, 10),
                             weatherIconDescriptionToday = weatherData.weatherIconDescriptionToday,
                             tempToday = weatherData.tempToday,
+//                            resourcesProvider.provideStringResourcesWithArgs(
+//                                R.string.celciy,
+//                                weatherData.tempToday),
                             maxAndMinTempToday = resourcesProvider.provideStringResourcesWithArgs(
                                 R.string.extremum,
                                 weatherData.maxAndMinTempToday.minTempToday,
@@ -61,9 +64,7 @@ class WeatherViewModel @Inject constructor(
                             ),
                             weatherByHour = weatherData.weatherByHour
                         )
-
                     }
-
             } catch (e: Throwable) {
                 myWeatherList.value = State.Error
                 Log.e(TAG, "Request city by using coroutines Error", e)

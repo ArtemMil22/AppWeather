@@ -1,5 +1,6 @@
 package com.example.myapplicationart.ui
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,19 +8,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplicationart.R
+import com.example.myapplicationart.data.model.WeatherHours
 import com.example.myapplicationart.domain.ICON_URL_PART_ONE
 import com.example.myapplicationart.domain.ICON_URL_PART_TWO
-import com.example.myapplicationart.ui.modelForUI.WeatherByHour
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
 
 class WeatherAdapter @Inject constructor() : RecyclerView.Adapter<WeatherAdapter.WeatherHolder>() {
 
-    var listWeather = emptyList<WeatherByHour>()
+    private var listWeather = emptyList<WeatherHours>()
 
-    class WeatherHolder(view: View) : RecyclerView.ViewHolder(view) {
-    }
+    class WeatherHolder(view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             WeatherHolder {
@@ -31,18 +31,18 @@ class WeatherAdapter @Inject constructor() : RecyclerView.Adapter<WeatherAdapter
 
     override fun onBindViewHolder(holder: WeatherHolder, position: Int) {
 
-        var tvDataItem = holder.itemView.findViewById<TextView>(R.id.tvDataItem)
-        var tvSunnyItem = holder.itemView.findViewById<TextView>(R.id.tvSunnyItem)
-        var tvTempItem = holder.itemView.findViewById<TextView>(R.id.tvTempItem)
-        var tvVeterItem = holder.itemView.findViewById<TextView>(R.id.tvVeterItem)
-        var tvIm = holder.itemView.findViewById<ImageView>(R.id.tvIm)
+        val tvDataItem = holder.itemView.findViewById<TextView>(R.id.tvDataItem)
+        val tvSunnyItem = holder.itemView.findViewById<TextView>(R.id.tvSunnyItem)
+        val tvTempItem = holder.itemView.findViewById<TextView>(R.id.tvTempItem)
+        val tvWindItem = holder.itemView.findViewById<TextView>(R.id.tvVeterItem)
+        val tvIm = holder.itemView.findViewById<ImageView>(R.id.tvIm)
 
-        tvDataItem.text = listWeather[position].dateTxt.let { it.substring(11, 16) }
-        tvSunnyItem.text = listWeather[position].weatherIcon.first().description
-        tvTempItem.text = listWeather[position].mainTemp.temp.toInt().toString().let { it + "°C" }
-        tvVeterItem.text = listWeather[position].windSpeed.toInt().toString().let { it + " m/s" }
+        tvDataItem.text = listWeather[position].dt_txt.substring(11, 16)
+        tvSunnyItem.text = listWeather[position].weather.first().description
+        tvTempItem.text = listWeather[position].main.temp.toInt().toString().let { "$it°C" }
+        tvWindItem.text = listWeather[position].wind.speed.toInt().toString().let { "$it m/s" }
         Picasso.get()
-            .load(ICON_URL_PART_ONE + listWeather[position].weatherIcon.first().icon + ICON_URL_PART_TWO)
+            .load(ICON_URL_PART_ONE + listWeather[position].weather.first().icon + ICON_URL_PART_TWO)
             .into(tvIm)
     }
 
@@ -50,9 +50,9 @@ class WeatherAdapter @Inject constructor() : RecyclerView.Adapter<WeatherAdapter
         return listWeather.size
     }
 
-    fun setList(getList: List<WeatherByHour>) {
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(getList: List<WeatherHours>) {
         listWeather = getList
         notifyDataSetChanged()
     }
-
 }
