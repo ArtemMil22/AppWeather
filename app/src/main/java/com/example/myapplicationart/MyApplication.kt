@@ -4,20 +4,20 @@ import android.app.Application
 import com.example.myapplicationart.di.AppComponent
 import com.example.myapplicationart.di.DaggerAppComponent
 
-class WeatherApp : Application() {
+class MyApplication : Application() {
+
+//    val appComponent: AppComponent by lazy {
+//        DaggerAppComponent.factory().create(applicationContext)
+//    }
 
     companion object {
         lateinit var app: Application
-        lateinit var component: AppComponent
+        lateinit var appComponent: AppComponent
     }
-
-    /**
-     * С даггером будем разбираться потом щас сделаем просто заглушку что бы собиралось
-     */
 
     override fun onCreate() {
         app = this
-        component = DaggerAppComponent.factory().create(this)
+        appComponent = DaggerAppComponent.factory().create(this)
         super.onCreate()
     }
 }

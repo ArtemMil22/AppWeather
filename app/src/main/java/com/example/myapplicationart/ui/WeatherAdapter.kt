@@ -11,9 +11,10 @@ import com.example.myapplicationart.domain.ICON_URL_PART_ONE
 import com.example.myapplicationart.domain.ICON_URL_PART_TWO
 import com.example.myapplicationart.ui.modelForUI.WeatherByHour
 import com.squareup.picasso.Picasso
+import javax.inject.Inject
 
 
-class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.WeatherHolder>() {
+class WeatherAdapter @Inject constructor() : RecyclerView.Adapter<WeatherAdapter.WeatherHolder>() {
 
     var listWeather = emptyList<WeatherByHour>()
 

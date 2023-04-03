@@ -1,5 +1,6 @@
 package com.example.myapplicationart.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,10 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplicationart.MyApplication
 import com.example.myapplicationart.R
-import com.example.myapplicationart.WeatherApp
 import com.example.myapplicationart.data.network.ApiService
-import com.example.myapplicationart.di.AppComponent
+import com.example.myapplicationart.databinding.FragmentWeatherBinding
 import com.example.myapplicationart.di.ViewModelFactory
 import com.example.myapplicationart.domain.TAG
 import com.google.android.material.appbar.AppBarLayout
@@ -26,14 +27,20 @@ import javax.inject.Inject
 class FragmentWeather : Fragment(R.layout.fragment_weather) {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: WeatherAdapter
     private lateinit var collapsingToolbarLayout: CollapsingToolbarLayout
     private lateinit var toolBar: Toolbar
     private lateinit var appBarLayout: AppBarLayout
-    private lateinit var dialogFragment: WeatherDialog
-    private lateinit var appComponent: AppComponent
     private lateinit var buttonSearch: ImageButton
     private lateinit var buttonSearch2: ImageButton
+
+    private var _binding: FragmentWeatherBinding? = null
+    private val binding get() = _binding!!
+
+    @Inject
+    lateinit var adapter: WeatherAdapter
+
+    @Inject
+    lateinit var dialogFragment: WeatherDialog
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -44,8 +51,15 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
     private val model: WeatherViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[WeatherViewModel::class.java]
     }
+
+    override fun onAttach(context: Context) {
+        MyApplication.appComponent.presentationComponent().create().inject(this)
+        super.onAttach(context)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        WeatherApp.component.inject(this)
+//       WeatherApp.appComponent.inject(this)
+
         super.onCreate(savedInstanceState)
     }
 
@@ -55,6 +69,7 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         buttonSearch = view.findViewById(R.id.buttonSearch)
         buttonSearch2 = view.findViewById(R.id.buttonSearch2)
         collapsingToolbarLayout = view.findViewById(R.id.collapsing_toolbar)
@@ -64,12 +79,12 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
         toolBar.inflateMenu(R.menu.fragment_weather)
         recyclerView = view.findViewById(R.id.tvRv)
         model.getDataWeather("Tambov")
-        adapter = WeatherAdapter()
+//        adapter = WeatherAdapter()
         recyclerView.adapter = adapter
         model.myWeatherList.observe(viewLifecycleOwner, ::render)
 
         buttonSearch2.setOnClickListener {
-            dialogFragment = WeatherDialog()
+//            dialogFragment = WeatherDialog()
             //dialogFragment = appComponent.getWeatherDialog()
             dialogFragment.show(parentFragmentManager, "My Fragment")
         }

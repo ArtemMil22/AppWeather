@@ -1,7 +1,5 @@
-package com.example.myapplicationart.di
+package com.example.myapplicationart.data.network
 
-import com.example.myapplicationart.data.network.ApiService
-import com.example.myapplicationart.data.network.RepositoryImp
 import com.example.myapplicationart.domain.BASE_URL
 import com.example.myapplicationart.domain.Repository
 import dagger.Module
