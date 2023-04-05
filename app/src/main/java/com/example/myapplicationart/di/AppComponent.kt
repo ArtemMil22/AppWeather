@@ -1,22 +1,25 @@
 package com.example.myapplicationart.di
 
 import android.content.Context
-import com.example.myapplicationart.data.network.NetworkModule
-import com.example.myapplicationart.ui.PresentationComponent
+import com.example.myapplicationart.di.module.AppModule
+import com.example.myapplicationart.ui.di.PresentationDependencies
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
 @[Singleton
 Component(
-    modules = [NetworkModule::class, ViewModelModule::class, AppSubcomponents::class]
+    modules = [
+        AppModule::class
+    ]
 )]
-interface AppComponent {
+interface AppComponent : PresentationDependencies {
+
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance context: Context): AppComponent
+        fun create(
+            @BindsInstance context: Context
+        ): AppComponent
     }
-
-    fun presentationComponent(): PresentationComponent.Factory
 
 }

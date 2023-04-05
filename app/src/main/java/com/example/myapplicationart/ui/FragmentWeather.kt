@@ -53,7 +53,11 @@ class FragmentWeather : Fragment(R.layout.fragment_weather) {
     }
 
     override fun onAttach(context: Context) {
-        MyApplication.appComponent.presentationComponent().create().inject(this)
+        DaggerPresentationComponent
+            .factory()
+            .create(MyApplication.appComponent)
+            .inject(this)
+
         super.onAttach(context)
     }
 
