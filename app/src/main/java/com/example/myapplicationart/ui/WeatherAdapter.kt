@@ -8,16 +8,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplicationart.R
-import com.example.myapplicationart.data.model.WeatherHours
 import com.example.myapplicationart.domain.ICON_URL_PART_ONE
 import com.example.myapplicationart.domain.ICON_URL_PART_TWO
+import com.example.myapplicationart.ui.modelForUI.WeatherByHour
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
 
 class WeatherAdapter @Inject constructor() : RecyclerView.Adapter<WeatherAdapter.WeatherHolder>() {
 
-    private var listWeather = emptyList<WeatherHours>()
+    private var listWeather = emptyList<WeatherByHour>()
 
     class WeatherHolder(view: View) : RecyclerView.ViewHolder(view)
 
@@ -25,10 +25,8 @@ class WeatherAdapter @Inject constructor() : RecyclerView.Adapter<WeatherAdapter
             WeatherHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_weather_layout, parent, false)
-
         return WeatherHolder(view)
     }
-
     override fun onBindViewHolder(holder: WeatherHolder, position: Int) {
 
         val tvDataItem = holder.itemView.findViewById<TextView>(R.id.tvDataItem)
@@ -37,12 +35,12 @@ class WeatherAdapter @Inject constructor() : RecyclerView.Adapter<WeatherAdapter
         val tvWindItem = holder.itemView.findViewById<TextView>(R.id.tvVeterItem)
         val tvIm = holder.itemView.findViewById<ImageView>(R.id.tvIm)
 
-        tvDataItem.text = listWeather[position].dt_txt.substring(11, 16)
-        tvSunnyItem.text = listWeather[position].weather.first().description
-        tvTempItem.text = listWeather[position].main.temp.toInt().toString().let { "$it°C" }
-        tvWindItem.text = listWeather[position].wind.speed.toInt().toString().let { "$it m/s" }
+        tvDataItem.text = listWeather[position].dateTxt .substring(11, 16)
+        tvSunnyItem.text = listWeather[position].weatherIcon.first().description
+        tvTempItem.text = listWeather[position].mainTemp.temp.toInt().toString().let { "$it°C" }
+        tvWindItem.text = listWeather[position].windSpeed.toInt().toString().let { "$it m/s" }
         Picasso.get()
-            .load(ICON_URL_PART_ONE + listWeather[position].weather.first().icon + ICON_URL_PART_TWO)
+            .load(ICON_URL_PART_ONE + listWeather[position].weatherIcon.first().icon + ICON_URL_PART_TWO)
             .into(tvIm)
     }
 
@@ -51,7 +49,7 @@ class WeatherAdapter @Inject constructor() : RecyclerView.Adapter<WeatherAdapter
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(getList: List<WeatherHours>) {
+    fun setList(getList: List<WeatherByHour>) {
         listWeather = getList
         notifyDataSetChanged()
     }

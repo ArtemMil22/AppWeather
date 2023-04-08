@@ -14,12 +14,12 @@ data class MaxMinTemp(
     val maxTempToday: Int,
     val minTempToday: Int
 )
-
 data class WeatherByHour(
     val mainTemp: MainTemperature,
     val weatherIcon: List<WeatherIcon>,
     val windSpeed: Float,
     val dateTxt: String
+
 )
 
 data class MainTemperature(

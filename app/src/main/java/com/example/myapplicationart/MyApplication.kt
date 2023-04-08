@@ -11,13 +11,12 @@ class MyApplication : Application() {
 //    }
 
     companion object {
-        lateinit var app: Application
+      //  lateinit var app: Application
         lateinit var appComponent: AppComponent
     }
-
     override fun onCreate() {
-        app = this
-        appComponent = DaggerAppComponent.factory().create(this)
+        //app = this
+       appComponent = DaggerAppComponent.factory().create(this)
         super.onCreate()
     }
 }
